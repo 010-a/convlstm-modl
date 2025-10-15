@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Black">
+    <option name="sdkName" value="modl" />
+  </component>
+  <component name="MarkdownSettings">
+    <option name="showProblemsInCodeBlocks" value="false" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="modl" project-jdk-type="Python SDK" />
+</project>
