@@ -6,7 +6,14 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 import matplotlib.pyplot as plt
 import os
+from tensorflow.keras import backend as K
 
+def dice_loss(y_true, y_pred, smooth=1e-6):
+    y_true_f = K.flatten(y_true)
+    y_pred_f = K.flatten(y_pred)
+    intersection = K.sum(y_true_f * y_pred_f)
+    dice_coefficient = (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
+    return 1. - dice_coefficient
 # 禁用TensorFlow的一些冗余日志
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -101,12 +108,12 @@ def train():
 
     # --- 步骤 E: 编译模型，准备微调 ---
     # 我们只训练新添加的层 (ConvLSTM和适配器层)
-    convlstm_unet_model.compile(optimizer=Adam(learning_rate=1e-4), loss='binary_crossentropy', metrics=['accuracy'])
-
+    #convlstm_unet_model.compile(optimizer=Adam(learning_rate=1e-4), loss='binary_crossentropy', metrics=['accuracy'])
+    convlstm_unet_model.compile(optimizer=Adam(learning_rate=1e-4), loss=dice_loss, metrics=['accuracy'])
     # ====================================================================
 
     # --- 设置模型保存回调 ---
-    output_model_path = '../model/convlstm_unet_finetuned.hdf5'
+    output_model_path = '../model/convlstm_unet_finetuned_dice.hdf5'
     model_checkpoint = ModelCheckpoint(output_model_path, monitor='loss', verbose=1, save_best_only=True)
 
     # --- 模型微调 ---
