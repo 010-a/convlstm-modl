@@ -66,8 +66,8 @@ def predict_center_frame_with_2_5d_model(model, raw_frames_3_seq, target_size=(5
 if __name__ == "__main__":
     # --- 配置 ---
     input_dir = "../10.15data_1-10/test/"
-    output_dir = "../10.15data_1-10/test_predictions_center_frame_dice/"
-    model_path = "../model/convlstm_unet_finetuned_dice.hdf5"
+    output_dir = "../10.15data_1-10/test_predictions_center_frame_stable/"
+    model_path = "../model/convlstm_unet_stable_final.hdf5"
 
     os.makedirs(output_dir, exist_ok=True)
 
